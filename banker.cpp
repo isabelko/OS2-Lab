@@ -1,4 +1,4 @@
-// Isak Sabelko OS Programming Algorithm 2
+// IIsak Sabelko OS Programming Algorithm 2
 #include <fstream>
 #include <iostream>
 using namespace std;
