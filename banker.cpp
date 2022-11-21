@@ -7,11 +7,11 @@ const int Processes = 5;
 const int Resources = 3;
   
 // Function to find the need of each process
-void findNeed(int need[Processes][Resources], int maximum[Processes][Resources], int allocation[Processes][Resources])
+void findNeed(int needed[Processes][Resources], int maximum[Processes][Resources], int allocation[Processes][Resources])
 {
-    for (int i = 0 ; i < Processes ; i++)
-        for (int j = 0 ; j < Resources ; j++) 
-            need[i][j] = maximum[i][j] - allocation[i][j];
+    for (int x = 0 ; x < Processes ; x++)
+        for (int y = 0 ; y < Resources ; y++) 
+            needed[x][y] = maximum[x][y] - allocation[x][y];
 }
   
 // Function to find the system is in safe state or not
@@ -19,45 +19,47 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
 {
     int need[Processes][Resources];
     findNeed(need, maximum, allocation);
-    bool finish[Processes] = {0};
+    
     int safeSequence[Processes];
+    bool completed[Processes] = {0};
 
     int work[Resources];
     for (int i = 0; i < Resources ; i++)
         work[i] = available[i];
 
-    int count = 0;
+    int count;
+    count = 0;
+
     while (count < Processes)
     {
-        bool found = false;
+        bool spotted = false;
         for (int p = 0; p < Processes; p++)
         {
-            if (finish[p] == 0)
+            if (completed[p] == 0)
             {
-                int j;
-                for (j = 0; j < Resources; j++)
-                    if (need[p][j] > work[j])
+                int q;
+                for (q = 0; q < Resources; q++)
+                    if (need[p][q] > work[q])
                         break;
-                if (j == Resources)
+                if (q == Resources)
                 {
                     for (int k = 0 ; k < Resources; k++)
                         work[k] += allocation[p][k];
 
                     safeSequence[count++] = p;
-                    finish[p] = 1;
-                    found = true;
+                    completed[p] = 1;
+                    spotted = true;
                 }
             }
         }
-
-        if (found == false)
+        if (spotted == false)
         {
-            cout << "System is not in safe state";
+            cout << "The system isn't in a safe state :(";
             return false;
         }
     }
 
-    cout << "The current system is in safe state.\nThe safe sequence is: ";
+    cout << "System is in a safe state! :)\nSafe sequence = ";
     for (int i = 0; i < Processes ; i++)
         cout << safeSequence[i] << " ";
   
@@ -92,12 +94,12 @@ int main()
     i = character - '0';
     available[2] = i;
 
+    cout << "making sure data entered in correctly from table:\nAvailable column: ";
     //check to make sure that the data was entered correctly
     for(int i = 0; i < 3; ++i)
     {
         cout << available[i] << " ";
     }
-
 
     //enter data from .txt file
     int maximum[5][Resources];
@@ -148,7 +150,7 @@ int main()
     maximum[4][2] = i;
 
     //check to make sure that the data was entered correctly
-    cout << "\n";
+    cout << "\nMaximum column: ";
     for(int i = 0; i < 5; ++i) { 
         for(int j = 0; j < 3; ++j)
         {
@@ -205,7 +207,7 @@ int main()
     allocation[4][2] = i;
 
     //check to make sure that the data was entered correctly
-    cout << "\n";
+    cout << "\nAllocation column: ";
     for(int i = 0; i < 5; ++i) { 
         for(int j = 0; j < 3; ++j)
         {
