@@ -32,7 +32,7 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
 
     while (counter < Processes)
     {
-        bool spotted = false;
+        int spotted = 0;
         for (int p = 0; p < Processes; p++)
         {
             if (completed[p] == 0)
@@ -48,11 +48,11 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
 
                     safeSequence[counter++] = p;
                     completed[p] = 1;
-                    spotted = true;
+                    spotted = 1;
                 }
             }
         }
-        if (spotted == false)
+        if (spotted == 0)
         {
             cout << "The system isn't in a safe state :(";
             return false;
