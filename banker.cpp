@@ -14,59 +14,6 @@ void findNeed(int needed[Processes][Resources], int maximum[Processes][Resources
             needed[x][y] = maximum[x][y] - allocation[x][y];
 }
   
-// Funtion for safe or not
-bool safeOrNot(int processes[], int available[], int maximum[][Resources], int allocation[][Resources])
-{
-    int need[Processes][Resources];
-    findNeed(need, maximum, allocation);
-    
-    int safeSequence[Processes];
-    bool completed[Processes] = {0};
-
-    int copyR[Resources];
-    for (int i = 0; i < Resources ; i++)
-        copyR[i] = available[i];
-
-    int counter;
-    counter = 0;
-
-    while (counter < Processes)
-    {
-        int spotted = 0;
-        for (int p = 0; p < Processes; p++)
-        {
-            if (completed[p] == 0)
-            {
-                int q;
-                for (q = 0; q < Resources; q++)
-                    if (need[p][q] > copyR[q])
-                        break;
-                if (q == Resources)
-                {
-                    for (int r = 0 ; r < Resources; r++)
-                        copyR[r] += allocation[p][r];
-
-                    safeSequence[counter++] = p;
-                    completed[p] = 1;
-                    spotted = 1;
-                }
-            }
-        }
-        if (spotted == 0)
-        {
-            cout << "The system isn't in a safe state :(";
-            return false;
-        }
-    }
-
-    cout << "The current system is in a safe state! :)\nThe safe state sequence = ";
-    for (int i = 0; i < Processes ; i++)
-        cout << safeSequence[i] << " ";
-  
-    cout << "\n";
-    return true;
-}
-  
 
 int main()
 {
@@ -218,8 +165,53 @@ int main()
     cout << endl;
     fclose(input_file);
 
-    // check if system is safe or isn't and find the safe sequence if safe
-    safeOrNot(processes, available, maximum, allocation);
+int need[Processes][Resources];
+    findNeed(need, maximum, allocation);
+    
+    int safeSequence[Processes];
+    bool completed[Processes] = {0};
+
+    int copyR[Resources];
+    for (int i = 0; i < Resources ; i++)
+        copyR[i] = available[i];
+
+    int counter;
+    counter = 0;
+
+    while (counter < Processes)
+    {
+        int spotted = 0;
+        for (int p = 0; p < Processes; p++)
+        {
+            if (completed[p] == 0)
+            {
+                int q;
+                for (q = 0; q < Resources; q++)
+                    if (need[p][q] > copyR[q])
+                        break;
+                if (q == Resources)
+                {
+                    for (int r = 0 ; r < Resources; r++)
+                        copyR[r] += allocation[p][r];
+
+                    safeSequence[counter++] = p;
+                    completed[p] = 1;
+                    spotted = 1;
+                }
+            }
+        }
+        if (spotted == 0)
+        {
+            cout << "The system isn't in a safe state :(";
+            return 0;
+        }
+    }
+
+    cout << "The current system is in a safe state! :)\nThe safe state sequence = ";
+    for (int i = 0; i < Processes ; i++)
+        cout << safeSequence[i] << " ";
+  
+    cout << "\n";
 
     return EXIT_SUCCESS;
     return 0;
