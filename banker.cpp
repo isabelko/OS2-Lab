@@ -1,21 +1,16 @@
-// IIsak Sabelko OS Programming Algorithm 2
+// Isak Sabelko OS Programming Algorithm 2
 #include <fstream>
 #include <iostream>
 using namespace std;
 
-// # processes
 const int Processes = 5;
-// # resources
 const int Resources = 3;
   
 // Function to find the need of each process
 void findNeed(int need[Processes][Resources], int maxm[Processes][Resources], int allot[Processes][Resources])
 {
-    // Calculating Need of each Processes
     for (int i = 0 ; i < Processes ; i++)
-        for (int j = 0 ; j < Resources ; j++)
-  
-            // Need of instance = maxm instance - allocated instance
+        for (int j = 0 ; j < Resources ; j++) 
             need[i][j] = maxm[i][j] - allot[i][j];
 }
   
@@ -23,74 +18,45 @@ void findNeed(int need[Processes][Resources], int maxm[Processes][Resources], in
 bool safeOrNot(int processes[], int avail[], int maxm[][Resources], int allot[][Resources])
 {
     int need[Processes][Resources];
-  
-    // Function to calculate need matrix
     findNeed(need, maxm, allot);
-  
-    // Mark all processes as infinish
     bool finish[Processes] = {0};
-  
-    // To store safe sequence
     int safeSeq[Processes];
-  
-    // Make a copy of available resources
+
     int work[Resources];
     for (int i = 0; i < Resources ; i++)
         work[i] = avail[i];
-  
-    // While all processes are not finished
-    // or system is not in safe state.
+
     int count = 0;
     while (count < Processes)
     {
-        // Find a process which is not finish and
-        // whose needs can be satisfied with current
-        // work[] resources.
         bool found = false;
         for (int p = 0; p < Processes; p++)
         {
-            // First check if a process is finished,
-            // if no, go for next condition
             if (finish[p] == 0)
             {
-                // Check if for all resources of
-                // current Processes need is less
-                // than work
                 int j;
                 for (j = 0; j < Resources; j++)
                     if (need[p][j] > work[j])
                         break;
-  
-                // If all needs of p were satisfied.
                 if (j == Resources)
                 {
-                    // Add the allocated resources of
-                    // current Processes to the available/work
-                    // resources i.e.free the resources
                     for (int k = 0 ; k < Resources; k++)
                         work[k] += allot[p][k];
-  
-                    // Add this process to safe sequence.
+
                     safeSeq[count++] = p;
-  
-                    // Mark this processes as finished
                     finish[p] = 1;
-  
                     found = true;
                 }
             }
         }
-  
-        //will print if not safe
+
         if (found == false)
         {
             cout << "System is not in safe state";
             return false;
         }
     }
-  
-    // If system is in safe state then
-    // safe sequence will be as below
+
     cout << "The current system is in safe state.\nThe safe sequence is: ";
     for (int i = 0; i < Processes ; i++)
         cout << safeSeq[i] << " ";
