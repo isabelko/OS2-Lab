@@ -1,4 +1,4 @@
-// Isak Sabelko OS Programming Algorithm 2
+//Isak Sabelko OS Programming Algorithm 2
 #include <fstream>
 #include <iostream>
 using namespace std;
@@ -7,24 +7,24 @@ const int Processes = 5;
 const int Resources = 3;
   
 // Function to find the need of each process
-void findNeed(int need[Processes][Resources], int maxm[Processes][Resources], int allot[Processes][Resources])
+void findNeed(int need[Processes][Resources], int maximum[Processes][Resources], int allocation[Processes][Resources])
 {
     for (int i = 0 ; i < Processes ; i++)
         for (int j = 0 ; j < Resources ; j++) 
-            need[i][j] = maxm[i][j] - allot[i][j];
+            need[i][j] = maximum[i][j] - allocation[i][j];
 }
   
 // Function to find the system is in safe state or not
-bool safeOrNot(int processes[], int avail[], int maxm[][Resources], int allot[][Resources])
+bool safeOrNot(int processes[], int available[], int maximum[][Resources], int allocation[][Resources])
 {
     int need[Processes][Resources];
-    findNeed(need, maxm, allot);
+    findNeed(need, maximum, allocation);
     bool finish[Processes] = {0};
-    int safeSeq[Processes];
+    int safeSequence[Processes];
 
     int work[Resources];
     for (int i = 0; i < Resources ; i++)
-        work[i] = avail[i];
+        work[i] = available[i];
 
     int count = 0;
     while (count < Processes)
@@ -41,9 +41,9 @@ bool safeOrNot(int processes[], int avail[], int maxm[][Resources], int allot[][
                 if (j == Resources)
                 {
                     for (int k = 0 ; k < Resources; k++)
-                        work[k] += allot[p][k];
+                        work[k] += allocation[p][k];
 
-                    safeSeq[count++] = p;
+                    safeSequence[count++] = p;
                     finish[p] = 1;
                     found = true;
                 }
@@ -59,7 +59,7 @@ bool safeOrNot(int processes[], int avail[], int maxm[][Resources], int allot[][
 
     cout << "The current system is in safe state.\nThe safe sequence is: ";
     for (int i = 0; i < Processes ; i++)
-        cout << safeSeq[i] << " ";
+        cout << safeSequence[i] << " ";
   
     cout << "\n";
     return true;
@@ -81,135 +81,135 @@ int main()
     int processes[] = {0, 1, 2, 3, 4};
 
     //enter data from .txt file
-    int avail[3];
+    int available[3];
     character = getc(input_file);
     int i = character - '0';
-    avail[0] = i;
+    available[0] = i;
     character = getc(input_file);
     i = character - '0';
-    avail[1] = i;
+    available[1] = i;
     character = getc(input_file);
     i = character - '0';
-    avail[2] = i;
+    available[2] = i;
 
     //check to make sure that the data was entered correctly
     for(int i = 0; i < 3; ++i)
     {
-        cout << avail[i] << " ";
+        cout << available[i] << " ";
     }
 
 
     //enter data from .txt file
-    int maxm[5][Resources];
+    int maximum[5][Resources];
     character = getc(input_file);
     i = character - '0';
-    maxm[0][0] = i;
+    maximum[0][0] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[0][1] = i;
+    maximum[0][1] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[0][2] = i;
+    maximum[0][2] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[1][0] = i;
+    maximum[1][0] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[1][1] = i;
+    maximum[1][1] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[1][2] = i;
+    maximum[1][2] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[2][0] = i;
+    maximum[2][0] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[2][1] = i;
+    maximum[2][1] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[2][2] = i;
+    maximum[2][2] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[3][0] = i;
+    maximum[3][0] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[3][1] = i;
+    maximum[3][1] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[3][2] = i;
+    maximum[3][2] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[4][0] = i;
+    maximum[4][0] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[4][1] = i;
+    maximum[4][1] = i;
     character = getc(input_file);
     i = character - '0';
-    maxm[4][2] = i;
+    maximum[4][2] = i;
 
     //check to make sure that the data was entered correctly
     cout << "\n";
     for(int i = 0; i < 5; ++i) { 
         for(int j = 0; j < 3; ++j)
         {
-            cout << maxm[i][j] << " ";
+            cout << maximum[i][j] << " ";
         }
     }
 
     //enter data from .txt file
-    int allot[5][Resources];
+    int allocation[5][Resources];
     character = getc(input_file);
     i = character - '0';
-    allot[0][0] = i;
+    allocation[0][0] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[0][1] = i;
+    allocation[0][1] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[0][2] = i;
+    allocation[0][2] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[1][0] = i;
+    allocation[1][0] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[1][1] = i;
+    allocation[1][1] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[1][2] = i;
+    allocation[1][2] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[2][0] = i;
+    allocation[2][0] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[2][1] = i;
+    allocation[2][1] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[2][2] = i;
+    allocation[2][2] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[3][0] = i;
+    allocation[3][0] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[3][1] = i;
+    allocation[3][1] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[3][2] = i;
+    allocation[3][2] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[4][0] = i;
+    allocation[4][0] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[4][1] = i;
+    allocation[4][1] = i;
     character = getc(input_file);
     i = character - '0';
-    allot[4][2] = i;
+    allocation[4][2] = i;
 
     //check to make sure that the data was entered correctly
     cout << "\n";
     for(int i = 0; i < 5; ++i) { 
         for(int j = 0; j < 3; ++j)
         {
-            cout << allot[i][j] << " ";
+            cout << allocation[i][j] << " ";
         }
     }
 
@@ -217,7 +217,7 @@ int main()
     fclose(input_file);
 
     // See if system is safe or isn't
-    safeOrNot(processes, avail, maxm, allot);
+    safeOrNot(processes, available, maximum, allocation);
 
     return EXIT_SUCCESS;
     return 0;
