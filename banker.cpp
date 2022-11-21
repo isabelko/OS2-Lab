@@ -6,7 +6,7 @@ using namespace std;
 const int Processes = 5;
 const int Resources = 3;
   
-// Function to find the need of each process
+// Function for need
 void findNeed(int needed[Processes][Resources], int maximum[Processes][Resources], int allocation[Processes][Resources])
 {
     for (int x = 0 ; x < Processes ; x++)
@@ -14,7 +14,7 @@ void findNeed(int needed[Processes][Resources], int maximum[Processes][Resources
             needed[x][y] = maximum[x][y] - allocation[x][y];
 }
   
-// Function to find the system is in safe state or not
+// Funtion for safe or not
 bool safeOrNot(int processes[], int available[], int maximum[][Resources], int allocation[][Resources])
 {
     int need[Processes][Resources];
@@ -23,14 +23,14 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
     int safeSequence[Processes];
     bool completed[Processes] = {0};
 
-    int work[Resources];
+    int copyR[Resources];
     for (int i = 0; i < Resources ; i++)
-        work[i] = available[i];
+        copyR[i] = available[i];
 
-    int count;
-    count = 0;
+    int counter;
+    counter = 0;
 
-    while (count < Processes)
+    while (counter < Processes)
     {
         bool spotted = false;
         for (int p = 0; p < Processes; p++)
@@ -39,14 +39,14 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
             {
                 int q;
                 for (q = 0; q < Resources; q++)
-                    if (need[p][q] > work[q])
+                    if (need[p][q] > copyR[q])
                         break;
                 if (q == Resources)
                 {
-                    for (int k = 0 ; k < Resources; k++)
-                        work[k] += allocation[p][k];
+                    for (int r = 0 ; r < Resources; r++)
+                        copyR[r] += allocation[p][r];
 
-                    safeSequence[count++] = p;
+                    safeSequence[counter++] = p;
                     completed[p] = 1;
                     spotted = true;
                 }
@@ -218,7 +218,7 @@ int main()
     cout << endl;
     fclose(input_file);
 
-    // See if system is safe or isn't
+    // check if system is safe or isn't and find the safe sequence if safe
     safeOrNot(processes, available, maximum, allocation);
 
     return EXIT_SUCCESS;
