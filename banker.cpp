@@ -59,7 +59,7 @@ bool safeOrNot(int processes[], int available[], int maximum[][Resources], int a
         }
     }
 
-    cout << "System is in a safe state! :)\nSafe sequence = ";
+    cout << "The current system is in a safe state! :)\nThe safe state sequence = ";
     for (int i = 0; i < Processes ; i++)
         cout << safeSequence[i] << " ";
   
