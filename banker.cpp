@@ -169,7 +169,7 @@ int main()
     findNeed(need, maximum, allocation);
     
     int safeSequence[Processes];
-    bool completed[Processes] = {0};
+    bool completed[Processes] = {false};
 
     int copyR[Resources];
     int copyCounter = 0;
