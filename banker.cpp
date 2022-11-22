@@ -6,7 +6,7 @@ using namespace std;
 const int Processes = 5;
 const int Resources = 3;
   
-// Function for need
+// Function for need 
 void findNeed(int needed[Processes][Resources], int maximum[Processes][Resources], int allocation[Processes][Resources])
 {
     for (int x = 0 ; x < Processes ; x++)
