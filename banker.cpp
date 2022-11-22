@@ -165,7 +165,7 @@ int main()
     cout << endl;
     fclose(input_file);
 
-int need[Processes][Resources];
+    int need[Processes][Resources];
     findNeed(need, maximum, allocation);
     
     int safeSequence[Processes];
@@ -183,7 +183,7 @@ int need[Processes][Resources];
         int spotted = 0;
         for (int p = 0; p < Processes; p++)
         {
-            if (completed[p] == 0)
+            if (completed[p] == false)
             {
                 int q;
                 for (q = 0; q < Resources; q++)
@@ -195,7 +195,7 @@ int need[Processes][Resources];
                         copyR[r] += allocation[p][r];
 
                     safeSequence[counter++] = p;
-                    completed[p] = 1;
+                    completed[p] = true;
                     spotted = 1;
                 }
             }
