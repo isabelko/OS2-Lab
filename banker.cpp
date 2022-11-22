@@ -172,8 +172,12 @@ int main()
     bool completed[Processes] = {0};
 
     int copyR[Resources];
-    for (int i = 0; i < Resources ; i++)
-        copyR[i] = available[i];
+    int copyCounter = 0;
+    while (copyCounter < Resources)
+    {
+        copyR[copyCounter] = available[copyCounter];
+        copyCounter++;
+    }
 
     int counter;
     counter = 0;
